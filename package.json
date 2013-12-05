@@ -29,6 +29,8 @@
     "karma-chai-sinon": "~0.1.0",
     "sinon-chai": "~2.4.0",
     "chai": "~1.8.1",
-    "sinon": "~1.7.3"
+    "sinon": "~1.7.3",
+    "karma-safari-launcher": "~0.1.1",
+    "karma-opera-launcher": "~0.1.0"
   }
 }
