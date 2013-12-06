@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CoffeeScroller Test</title>
+  <link rel="stylesheet" href="./node_modules/mocha/mocha.css">
+</head>
+<body>
+  <div id="mocha"></div>
+  <script src="./MVCObject.js"></script>
+  <script src="./node_modules/mocha/mocha.js"></script>
+  <script src="./node_modules/chai/chai.js"></script>
+  <script src="./node_modules/sinon/pkg/sinon.js"></script>
+  <script src="./node_modules/sinon-chai/lib/sinon-chai.js"></script>
+  <script>
+    mocha.setup('bdd');
+    expect = chai.expect;
+    should = chai.should();
+  </script>
+  <script src="./test/test.js"></script>
+  <script src="./test/demo.js"></script>
+  <script>
+    mocha.run()
+  </script>
+</body>
+</html>
