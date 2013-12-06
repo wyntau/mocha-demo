@@ -1,16 +1,16 @@
 {
-  "name": "test",
+  "name": "mocha-demo",
   "version": "0.0.0",
   "description": "",
-  "main": "global.js",
+  "main": "index.html",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt karma"
   },
   "author": "",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "devDependencies": {
     "grunt-karma": "~0.6.2",
     "mocha": "~1.15.1",
