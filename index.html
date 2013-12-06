@@ -7,7 +7,7 @@
 </head>
 <body>
   <div id="mocha"></div>
-  <!-- include test library -->
+  <!-- include test frameworks -->
   <script src="./node_modules/mocha/mocha.js"></script>
   <script src="./node_modules/chai/chai.js"></script>
   <script src="./node_modules/sinon/pkg/sinon.js"></script>
@@ -18,8 +18,9 @@
     expect = chai.expect;
     should = chai.should();
   </script>
-  <!-- include test script -->
+  <!-- include test library -->
   <script src="./MVCObject.js"></script>
+  <!-- include test specs -->
   <script src="./test/test.js"></script>
   <script src="./test/demo.js"></script>
   <script>

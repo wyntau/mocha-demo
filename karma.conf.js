@@ -14,14 +14,16 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      // test library
       'MVCObject.js',
+      // test specs
       'test/**/*.js'
     ],
 
 
     // list of files to exclude
     exclude: [
-      
+
     ],
 
 

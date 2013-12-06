@@ -146,7 +146,7 @@
                           e             f
     */
 
-    return it('more changed', function() {
+    return xit('more changed', function() {
       var a, b, c, d, e, f;
       a = new MVCObject();
       b = new MVCObject();
