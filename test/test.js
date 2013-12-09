@@ -48,14 +48,6 @@
       m.notify('k');
       return expect(spy.calledOnce).to.be.ok;
     });
-    it('NotifyKeyEvent', function() {
-      var m, spy;
-      m = new MVCObject;
-      spy = sinon.spy();
-      m.addListener('k_changed', spy);
-      m.notify('k');
-      return expect(spy.calledOnce).to.be.ok;
-    });
     it('SetNotifyCallback', function() {
       var m, spy;
       m = new MVCObject();
@@ -94,14 +86,6 @@
       m.set('k', 1);
       expect(spy1.calledTwice).to.be.ok;
       return expect(spy2.calledOnce).to.be.ok;
-    });
-    it('SetNotifyKeyEvent', function() {
-      var m, spy;
-      m = new MVCObject;
-      spy = sinon.spy();
-      m.addListener('k_changed', spy);
-      m.set('k', 1);
-      return expect(spy.calledOnce).to.be.ok;
     });
     it('SetBind', function() {
       var m, n;

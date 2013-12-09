@@ -15,7 +15,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // test library
-      'MVCObject.js',
+      'node_modules/mvcobject/MVCObject.js',
       // test specs
       'test/**/*.js'
     ],
@@ -67,6 +67,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false // false
+    singleRun: true // false
   });
 };

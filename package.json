@@ -32,5 +32,8 @@
     "sinon": "~1.7.3",
     "karma-safari-launcher": "~0.1.1",
     "karma-opera-launcher": "~0.1.0"
+  },
+  "dependencies": {
+    "mvcobject": "0.0.4"
   }
 }
