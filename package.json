@@ -7,7 +7,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "grunt karma"
+    "test": "grunt karma",
+    "karma": "./node_modules/.bin/karma start",
+    "mocha": "./node_modules/.bin/mocha"
   },
   "author": "",
   "license": "MIT",

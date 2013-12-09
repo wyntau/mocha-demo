@@ -10,6 +10,10 @@ There are four situation Here.
 
 1. use mocha in Node.js with `chai.js` `sinon.js` `sinon-chai.js`
 
+        npm run-script mocha
+
+    or if you installed `mocha` globally, run
+
         mocha
 
 2. use mocha in brower with `chai.js` `sinon.js` `sinon-chai.js`
@@ -18,8 +22,16 @@ There are four situation Here.
 
 3. use mocha in karma, suites are tested in `Chrome`, `Firefox`, `Safari`, `Opera` and `PhantomJS`
 
+        npm run-script karma
+
+    or if you installed `karma` globally, run
+
         karma start
 
 4. use mocha in grunt-karma, suites are tested in `Chrome`, `Firefox`, `Safari`, `Opera` and `PhantomJS`
 
         grunt karma
+
+    or
+
+        npm test
