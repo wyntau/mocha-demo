@@ -20,7 +20,7 @@ There are four situation Here.
 
         open index.html
 
-3. use mocha in karma, suites are tested in `Chrome`, `Firefox`, `Safari`, `Opera` and `PhantomJS`
+3. use mocha in `karma` `karma-mocha`, suites are tested in `Chrome`, `Firefox`, `Safari`, `Opera` and `PhantomJS`
 
         npm run-script karma
 
@@ -28,7 +28,7 @@ There are four situation Here.
 
         karma start
 
-4. use mocha in grunt-karma, suites are tested in `Chrome`, `Firefox`, `Safari`, `Opera` and `PhantomJS`
+4. use mocha in `grunt-karma` with `karma` and `karma-mocha`, suites are tested in `Chrome`, `Firefox`, `Safari`, `Opera` and `PhantomJS`
 
         grunt karma
 
