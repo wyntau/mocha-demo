@@ -36,7 +36,7 @@
     "karma-opera-launcher": "~0.1.0"
   },
   "dependencies": {
-    "mvcobject": "0.0.6",
+    "mvcobject": "0.1.2",
     "karma-jasmine": "~0.1.5",
     "mocha": "~1.15.1"
   }

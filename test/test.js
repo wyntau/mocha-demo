@@ -7,20 +7,19 @@
     it('model', function() {
       var m;
       m = new MVCObject();
-      expect(m).to.not.equal(null);
-      return expect(m).to.not.equal(void 0);
+      return should.exist(m);
     });
     it('GetUndefined', function() {
       var m;
       m = new MVCObject();
-      return expect(m.get('k')).to.equal(void 0);
+      return should.not.exist(m.get('k'));
     });
     it('GetSetGet', function() {
       var m;
       m = new MVCObject();
-      expect(m.get('k')).to.equal(void 0);
+      should.not.exist(m.get('k'));
       m.set('k', 1);
-      return expect(m.get('k')).to.equal(1);
+      return m.get('k').should.equal(1);
     });
     it('SetValues', function() {
       var m;
@@ -29,40 +28,36 @@
         k1: 1,
         k2: 2
       });
-      expect(m.get('k1')).to.equal(1);
-      return expect(m.get('k2')).to.equal(2);
+      m.get('k1').should.equal(1);
+      return m.get('k2').should.equal(2);
     });
     it('NotifyCallback', function() {
-      var m, spy;
+      var m;
       m = new MVCObject();
-      spy = sinon.spy();
-      m.changed = spy;
+      m.changed = sinon.spy();
       m.notify('k');
-      return expect(spy.calledOnce).to.be.ok;
+      return m.changed.should.have.been.calledOnce;
     });
     it('NotifyKeyCallback', function() {
-      var m, spy;
+      var m;
       m = new MVCObject();
-      spy = sinon.spy();
-      m.k_changed = spy;
+      m.k_changed = sinon.spy();
       m.notify('k');
-      return expect(spy.calledOnce).to.be.ok;
+      return m.k_changed.should.have.been.calledOnce;
     });
     it('SetNotifyCallback', function() {
-      var m, spy;
+      var m;
       m = new MVCObject();
-      spy = sinon.spy();
-      m.changed = spy;
+      m.changed = sinon.spy();
       m.set('k', 1);
-      return expect(spy.calledOnce).to.be.ok;
+      return m.changed.should.have.been.calledOnce;
     });
     it('SetNotifyKeyCallback', function() {
-      var m, spy;
+      var m;
       m = new MVCObject();
-      spy = sinon.spy();
-      m.k_changed = spy;
+      m.k_changed = sinon.spy();
       m.set('k', 1);
-      return expect(spy.calledOnce).to.be.ok;
+      return m.k_changed.should.have.been.calledOnce;
     });
     /*
     bindTo(key, target, targetKey, noNotify):
@@ -73,30 +68,43 @@
     */
 
     it('BindSetNotifyKeyCallback', function() {
-      var m, n, p, spy1, spy2;
+      var m, n, p;
       m = new MVCObject();
       n = new MVCObject();
       p = new MVCObject();
-      spy1 = sinon.spy();
-      spy2 = sinon.spy();
-      n.k_changed = spy1;
-      p.k_changed = spy2;
+      n.k_changed = sinon.spy();
+      p.k_changed = sinon.spy();
       n.bindTo('k', m);
       p.bindTo('k', m, 'k', true);
       m.set('k', 1);
-      expect(spy1.calledTwice).to.be.ok;
-      return expect(spy2.calledOnce).to.be.ok;
+      n.k_changed.should.have.been.calledTwice;
+      return p.k_changed.should.have.been.calledOnce;
     });
     it('SetBind', function() {
       var m, n;
       m = new MVCObject();
       n = new MVCObject();
       m.set('k', 1);
-      expect(m.get('k')).to.equal(1);
-      expect(n.get('k')).to.equal(void 0);
+      m.get('k').should.equal(1);
+      should.not.exist(n.get('k'));
       n.bindTo('k', m);
-      expect(m.get('k')).to.equal(1);
-      return expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(1);
+    });
+    it('SetBindTransform', function() {
+      var m, n;
+      m = new MVCObject();
+      n = new MVCObject();
+      m.set('k', 1);
+      m.get('k').should.equal(1);
+      should.not.exist(n.get('k'));
+      n.bindTo('k', m).transform(function(fromValue) {
+        return fromValue / 2;
+      }, function(toValue) {
+        return toValue * 2;
+      });
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(2);
     });
     it('BindSet', function() {
       var m, n;
@@ -104,8 +112,21 @@
       n = new MVCObject();
       n.bindTo('k', m);
       m.set('k', 1);
-      expect(m.get('k')).to.equal(1);
-      return expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(1);
+    });
+    it('BindSetTransform', function() {
+      var m, n;
+      m = new MVCObject();
+      n = new MVCObject();
+      n.bindTo('k', m).transform(function(fromValue) {
+        return fromValue / 2;
+      }, function(toValue) {
+        return toValue * 2;
+      });
+      m.set('k', 1);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(2);
     });
     it('BindSetBackwards', function() {
       var m, n;
@@ -113,8 +134,21 @@
       n = new MVCObject();
       n.bindTo('k', m);
       n.set('k', 1);
-      expect(m.get('k')).to.equal(1);
-      return expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(1);
+    });
+    it('BindSetBackwardsTransform', function() {
+      var m, n;
+      m = new MVCObject();
+      n = new MVCObject();
+      n.bindTo('k', m).transform(function(fromValue) {
+        return fromValue / 2;
+      }, function(toValue) {
+        return toValue * 2;
+      });
+      n.set('k', 2);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(2);
     });
     it('SetBindBackwards', function() {
       var m, n;
@@ -122,8 +156,8 @@
       n = new MVCObject();
       n.set('k', 1);
       n.bindTo('k', m);
-      expect(m.get('k')).to.equal(void 0);
-      return expect(n.get('k')).to.equal(void 0);
+      should.not.exist(m.get('k'));
+      return should.not.exist(n.get('k'));
     });
     it('BindSetUnbind', function() {
       var m, n;
@@ -131,14 +165,14 @@
       n = new MVCObject();
       n.bindTo('k', m);
       n.set('k', 1);
-      expect(m.get('k')).to.equal(1);
-      expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      n.get('k').should.equal(1);
       n.unbind('k');
-      expect(m.get('k')).to.equal(1);
-      expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      n.get('k').should.equal(1);
       n.set('k', 2);
-      expect(m.get('k')).to.equal(1);
-      return expect(n.get('k')).to.equal(2);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(2);
     });
     it('UnbindAll', function() {
       var m, n;
@@ -146,40 +180,36 @@
       n = new MVCObject();
       n.bindTo('k', m);
       n.set('k', 1);
-      expect(m.get('k')).to.equal(1);
-      expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      n.get('k').should.equal(1);
       n.unbindAll();
-      expect(m.get('k')).to.equal(1);
-      expect(n.get('k')).to.equal(1);
+      m.get('k').should.equal(1);
+      n.get('k').should.equal(1);
       n.set('k', 2);
-      expect(m.get('k')).to.equal(1);
-      return expect(n.get('k')).to.equal(2);
+      m.get('k').should.equal(1);
+      return n.get('k').should.equal(2);
     });
     it('BindNotify', function() {
-      var m, mSpy, n, nSpy;
+      var m, n;
       m = new MVCObject();
       n = new MVCObject();
       m.bindTo('k', n);
-      mSpy = sinon.spy();
-      m.k_changed = mSpy;
-      nSpy = sinon.spy();
-      n.k_changed = nSpy;
+      m.k_changed = sinon.spy();
+      n.k_changed = sinon.spy();
       n.set('k', 1);
-      expect(mSpy.calledOnce).to.be.ok;
-      return expect(nSpy.calledOnce).to.be.ok;
+      m.k_changed.should.have.been.calledOnce;
+      return n.k_changed.should.have.been.calledOnce;
     });
     it('BindBackwardsNotify', function() {
-      var m, mSpy, n, nSpy;
+      var m, n;
       m = new MVCObject();
       n = new MVCObject();
       n.bindTo('k', m);
-      mSpy = sinon.spy();
-      m.k_changed = mSpy;
-      nSpy = sinon.spy();
-      n.k_changed = nSpy;
+      m.k_changed = sinon.spy();
+      n.k_changed = sinon.spy();
       n.set('k', 1);
-      expect(mSpy.calledOnce).to.be.ok;
-      return expect(nSpy.calledOnce).to.be.ok;
+      m.k_changed.should.have.been.calledOnce;
+      return n.k_changed.should.have.been.calledOnce;
     });
     it('BindRename', function() {
       var m, n;
@@ -187,23 +217,21 @@
       n = new MVCObject();
       n.bindTo('kn', m, 'km');
       m.set('km', 1);
-      expect(m.get('km')).to.equal(1);
-      return expect(n.get('kn')).to.equal(1);
+      m.get('km').should.equal(1);
+      return n.get('kn').should.equal(1);
     });
     it('BindRenameCallbacks', function() {
-      var kmSpy, knSpy, m, n;
+      var m, n;
       m = new MVCObject();
       n = new MVCObject();
-      kmSpy = sinon.spy();
-      m.km_changed = kmSpy;
-      knSpy = sinon.spy();
-      n.kn_changed = knSpy;
+      m.km_changed = sinon.spy();
+      n.kn_changed = sinon.spy();
       n.bindTo('kn', m, 'km');
       m.set('km', 1);
-      expect(m.get('km')).to.equal(1);
-      expect(n.get('kn')).to.equal(1);
-      expect(kmSpy.calledOnce).to.be.ok;
-      return expect(knSpy.calledTwice).to.be.ok;
+      m.get('km').should.equal(1);
+      n.get('kn').should.equal(1);
+      m.km_changed.should.have.been.calledOnce;
+      return n.kn_changed.should.have.been.calledTwice;
     });
     it('TransitiveBindForwards', function() {
       var m, n, o;
@@ -213,9 +241,9 @@
       n.bindTo('kn', m, 'km');
       o.bindTo('ko', n, 'kn');
       m.set('km', 1);
-      expect(m.get('km')).to.equal(1);
-      expect(n.get('kn')).to.equal(1);
-      return expect(o.get('ko')).to.equal(1);
+      m.get('km').should.equal(1);
+      n.get('kn').should.equal(1);
+      return o.get('ko').should.equal(1);
     });
     it('TransitiveBindBackwards', function() {
       var m, n, o;
@@ -225,9 +253,9 @@
       n.bindTo('kn', m, 'km');
       o.bindTo('ko', n, 'kn');
       o.set('ko', 1);
-      expect(m.get('km')).to.equal(1);
-      expect(n.get('kn')).to.equal(1);
-      return expect(o.get('ko')).to.equal(1);
+      m.get('km').should.equal(1);
+      n.get('kn').should.equal(1);
+      return o.get('ko').should.equal(1);
     });
     it('Inheritance', function() {
       var C, c, spy, _ref;
@@ -247,21 +275,21 @@
       })(MVCObject);
       c = new C();
       c.set('k', 1);
-      expect(c.get('k')).to.equal(1);
-      return expect(spy.calledOnce).to.equal(true);
+      c.get('k').should.equal(1);
+      return spy.should.have.been.calledOnce;
     });
     it('MrideyAccessors', function() {
       var a, b;
       a = new MVCObject();
       a.set('level', 2);
-      expect(a.get('level')).to.equal(2);
+      a.get('level').should.equal(2);
       b = new MVCObject();
       b.setValues({
         level: 2,
         index: 3,
         description: 'Hello world'
       });
-      return expect(b.get('index')).to.equal(3);
+      return b.get('index').should.equal(3);
     });
     it('MrideyBinding', function() {
       var a, b, c;
@@ -269,28 +297,28 @@
       a.set('level', 2);
       b = new MVCObject();
       b.bindTo('index', a, 'level');
-      expect(b.get('index')).to.equal(2);
+      b.get('index').should.equal(2);
       a.set('level', 3);
-      expect(b.get('index')).to.equal(3);
+      b.get('index').should.equal(3);
       b.set('index', 4);
-      expect(a.get('level')).to.equal(4);
+      a.get('level').should.equal(4);
       c = new MVCObject();
       c.bindTo('zoom', a, 'level');
-      expect(c.get('zoom')).to.equal(4);
+      c.get('zoom').should.equal(4);
       b.unbind('index');
-      expect(b.get('index')).to.equal(4);
+      b.get('index').should.equal(4);
       c.set('zoom', 5);
-      expect(a.get('level')).to.equal(5);
-      return expect(b.get('index')).to.equal(4);
+      a.get('level').should.equal(5);
+      return b.get('index').should.equal(4);
     });
     it('CircularBind', function() {
       var a, b;
       a = new MVCObject();
       b = new MVCObject();
       a.bindTo('k', b);
-      return expect(function() {
+      return should["throw"](function() {
         return b.bindTo('k', a);
-      }).to["throw"]();
+      });
     });
     /*
     set(key, value):
@@ -300,30 +328,28 @@
     */
 
     it('Setter', function() {
-      var a, spy, x;
+      var a, x;
       a = new MVCObject();
       x = void 0;
-      spy = sinon.spy();
-      a.setX = spy;
+      a.setX = sinon.spy();
       a.set('x', 1);
-      expect(a.get('x')).to.equal(1);
-      expect(a.x).to.equal(1);
-      return expect(spy.called).to.not.be.ok;
+      a.get('x').should.equal(1);
+      a.x.should.equal(1);
+      return a.setX.should.not.have.been.called;
     });
     it('SetterBind', function() {
-      var a, b, spy;
+      var a, b;
       a = new MVCObject();
-      spy = sinon.spy();
       a.setX = function(value) {
-        this.x = value;
-        return spy();
+        return this.x = value;
       };
+      sinon.spy(a, 'setX');
       b = new MVCObject();
       b.bindTo('x', a);
       b.set('x', 1);
-      expect(a.get('x')).to.equal(1);
-      expect(b.get('x')).to.equal(1);
-      return expect(spy.calledOnce).to.be.ok;
+      a.get('x').should.equal(1);
+      b.get('x').should.equal(1);
+      return a.setX.should.have.been.calledOnce;
     });
     /*
     get(key):
@@ -334,26 +360,24 @@
     */
 
     it('Getter', function() {
-      var a, spy;
+      var a;
       a = new MVCObject();
-      spy = sinon.spy();
-      a.getX = spy;
+      a.getX = sinon.spy();
       a.x = 2;
-      expect(a.get('x')).to.equal(2);
-      return expect(spy.called).to.not.be.ok;
+      a.get('x').should.equal(2);
+      return a.getX.should.not.have.been.called;
     });
     it('GetterBind', function() {
-      var a, b, spy;
+      var a, b;
       a = new MVCObject();
-      spy = sinon.spy();
       a.getX = function() {
-        spy();
         return 1;
       };
+      sinon.spy(a, 'getX');
       b = new MVCObject();
       b.bindTo('x', a);
-      expect(b.get('x')).to.equal(1);
-      return expect(spy.calledOnce).to.be.ok;
+      b.get('x').should.equal(1);
+      return a.getX.should.have.been.calledOnce;
     });
     it('Priority', function() {
       var a, b;
@@ -361,21 +385,21 @@
       b = new MVCObject();
       a.set('k', 1);
       b.set('k', 2);
-      expect(a.get('k')).to.equal(1);
-      expect(b.get('k')).to.equal(2);
+      a.get('k').should.equal(1);
+      b.get('k').should.equal(2);
       a.bindTo('k', b);
-      expect(a.get('k')).to.equal(2);
-      return expect(b.get('k')).to.equal(2);
+      a.get('k').should.equal(2);
+      return b.get('k').should.equal(2);
     });
     it('PriorityUndefined', function() {
       var a, b;
       a = new MVCObject();
       b = new MVCObject();
       a.set('k', 1);
-      expect(a.get('k')).to.equal(1);
+      a.get('k').should.equal(1);
       a.bindTo('k', b);
-      expect(a.get('k')).to.equal(void 0);
-      return expect(b.get('k')).to.equal(void 0);
+      should.not.exist(a.get('k'));
+      return should.not.exist(b.get('k'));
     });
     /*
         a --> b --> c
@@ -405,17 +429,16 @@
     it('BindSelf', function() {
       var a;
       a = new MVCObject();
-      return expect(function() {
+      return should["throw"](function() {
         return a.bindTo('k', a);
-      }).to["throw"]();
+      });
     });
     it('ChangedKey', function() {
-      var a, spy;
+      var a;
       a = new MVCObject();
-      spy = sinon.spy();
-      a.changed = spy;
+      a.changed = sinon.spy();
       a.set('k', 1);
-      return expect(spy.calledWith('k')).to.be.ok;
+      return a.changed.should.have.been.calledWith('k');
     });
     /*
     {property}_changed|changed
@@ -428,7 +451,7 @@
                           e             f
     */
 
-    return xit('more changed', function() {
+    return it('more changed', function() {
       var a, b, c, d, e, f;
       a = new MVCObject();
       b = new MVCObject();
@@ -441,49 +464,45 @@
       c.bindTo('k', d);
       e.bindTo('k', b);
       f.bindTo('k', c);
-      a.k_changed = function() {
-        return console.log('a: k_changed');
-      };
-      b.k_changed = function() {
-        return console.log('b: k_changed');
-      };
-      c.k_changed = function() {
-        return console.log('c: k_changed');
-      };
-      d.k_changed = function() {
-        return console.log('d: k_changed');
-      };
-      e.k_changed = function() {
-        return console.log('e: k_changed');
-      };
-      f.k_changed = function() {
-        return console.log('f: k_changed');
-      };
+      a.k_changed = sinon.spy();
+      b.k_changed = sinon.spy();
+      c.k_changed = sinon.spy();
+      d.k_changed = sinon.spy();
+      e.k_changed = sinon.spy();
+      f.k_changed = sinon.spy();
       a.setK = function(value) {
-        console.log('a: setK');
         return this.set('k', value);
       };
       b.setK = function(value) {
-        console.log('b: setK');
         return this.set('k', value);
       };
       c.setK = function(value) {
-        console.log('c: setK');
         return this.set('k', value);
       };
       d.setK = function(value) {
-        console.log('d: setK');
         return this.set('k', value);
       };
       e.setK = function(value) {
-        console.log('e: setK');
         return this.set('k', value);
       };
       f.setK = function(value) {
-        console.log('f: setK');
         return this.set('k', value);
       };
-      return f.set('k', 1);
+      sinon.spy(a, 'setK');
+      sinon.spy(b, 'setK');
+      sinon.spy(c, 'setK');
+      sinon.spy(d, 'setK');
+      sinon.spy(e, 'setK');
+      sinon.spy(f, 'setK');
+      e.set('k', 1);
+      e.setK.should.not.have.been.called;
+      b.setK.should.have.been.calledBefore(c.setK);
+      c.setK.should.have.been.calledBefore(d.setK);
+      d.k_changed.should.have.been.calledBefore(c.k_changed);
+      c.k_changed.should.have.been.calledBefore(b.k_changed);
+      c.k_changed.should.have.been.calledBefore(f.k_changed);
+      b.k_changed.should.have.been.calledBefore(a.k_changed);
+      return b.k_changed.should.have.been.calledBefore(e.k_changed);
     });
   });
 
