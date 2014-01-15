@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "install": "./node_modules/.bin.coffee -c test/test.coffee",
+    "install": "./node_modules/.bin/coffee -c test/test.coffee",
     "test": "grunt karma",
     "karma": "./node_modules/.bin/karma start",
     "mocha": "./node_modules/.bin/mocha"
