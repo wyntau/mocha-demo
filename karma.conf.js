@@ -23,8 +23,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-    'test/common.js',
-    'test/mocha.opts'
+    'test/common.js'
     ],
 
 
