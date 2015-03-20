@@ -12,7 +12,7 @@
     "karma": "./node_modules/.bin/karma start",
     "mocha": "./node_modules/.bin/mocha"
   },
-  "author": "Jeremial",
+  "author": "Treri",
   "license": "MIT",
   "dependencies": {
     "mvcobject": "0.5.0",
@@ -37,5 +37,20 @@
     "sinon": "~1.14.1",
     "karma-safari-launcher": "~0.1.1",
     "karma-opera-launcher": "~0.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Treri/mocha-demo"
+  },
+  "keywords": [
+    "mocha",
+    "karma",
+    "coffeescript",
+    "grunt",
+    "npm"
+  ],
+  "bugs": {
+    "url": "https://github.com/Treri/mocha-demo/issues"
+  },
+  "homepage": "https://github.com/Treri/mocha-demo"
 }
